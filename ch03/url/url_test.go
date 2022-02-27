@@ -131,8 +131,8 @@ func TestURLPort(t *testing.T) {
 		{in: "foo.com:80", port: "80"}, // with port
 		{in: "foo.com:", port: ""},     // with empty port
 		{in: "foo.com", port: ""},      // without port
-		{in: "1.2.3.4:90", port: "90"}, // ip without port
-		{in: "1.2.3.4", port: ""},      // ip with port
+		{in: "1.2.3.4:90", port: "90"}, // ip with port
+		{in: "1.2.3.4", port: ""},      // ip without port
 		// Add more tests in case of a need
 	}
 	for _, tt := range tests {
@@ -152,14 +152,15 @@ func TestURLPort(t *testing.T) {
 		in   string // URL.Host field
 		port string
 	}{
-		1: {in: "foo.com:80", port: "80"},  // with port
-		3: {in: "foo.com:", port: ""},      // with empty port
-		2: {in: "foo.com", port: ""},       // without port
-		4: {in: "1.2.3.4:90", port: "90"},  // ip without port
-		5: {in: "1.2.3.4", port: ""},       // ip with port
+		1: {in: "foo.com:80", port: "80"}, // with port
+		3: {in: "foo.com:", port: ""},     // with empty port
+		2: {in: "foo.com", port: ""},      // without port
+		4: {in: "1.2.3.4:90", port: "90"}, // ip with port
+		5: {in: "1.2.3.4", port: ""},      // ip without port
 		// Add more tests in case of a need
 	}
-	for i, tt := range tests {
+	for i := 1; i < len(tests); i++ {
+		tt := tests[i]
 		u := &URL{Host: tt.in}
 		if got, want := u.Port(), tt.port; got != want {
 			t.Errorf("test %d: for host %q; got %q; want %q", i, tt.in, got, want)
@@ -190,12 +191,12 @@ func TestURLPort(t *testing.T) {
 			in:   "foo.com", port: "",
 		},
 		{
-			name: "ip without port",
-			in:   "1.2.3.4", port: "",
-		},
-		{
 			name: "ip with port",
 			in:   "1.2.3.4:90", port: "90",
+		},
+		{
+			name: "ip without port",
+			in:   "1.2.3.4", port: "",
 		},
 		// Add more tests in case of a need
 	}
